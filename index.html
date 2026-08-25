@@ -1,1493 +1,410 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clayton Rodrigues Israel — Artes Marciais de Elite</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black: #050505;
-    --dark: #0a0a0a;
-    --graphite: #111111;
-    --graphite2: #1a1a1a;
-    --red: #c0000a;
-    --red-glow: #ff0015;
-    --gold: #c8972a;
-    --gold-light: #e8b84b;
-    --white: #f5f5f5;
-    --gray: #888;
-    --gray-light: #aaa;
-  }
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-background: var(–black);
-color: var(–white);
-font-family: ‘Barlow’, sans-serif;
-overflow-x: hidden;
-cursor: default;
-}
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(–dark); }
-::-webkit-scrollbar-thumb { background: var(–red); }
-
-/* ─── NAV ─────────────────────────────────────── */
-nav {
-position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-display: flex; align-items: center; justify-content: space-between;
-padding: 18px 60px;
-background: linear-gradient(to bottom, rgba(5,5,5,0.95) 0%, transparent 100%);
-backdrop-filter: blur(2px);
-transition: background 0.4s;
-}
-nav.scrolled { background: rgba(5,5,5,0.97); border-bottom: 1px solid rgba(192,0,10,0.3); }
-
-.nav-logo {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.6rem;
-letter-spacing: 3px;
-color: var(–white);
-}
-.nav-logo span { color: var(–red); }
-
-.nav-links { display: flex; gap: 36px; list-style: none; }
-.nav-links a {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.78rem;
-font-weight: 400;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(–gray-light);
-text-decoration: none;
-transition: color 0.3s;
-}
-.nav-links a:hover { color: var(–white); }
-
-.nav-cta {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.78rem;
-font-weight: 600;
-letter-spacing: 2px;
-text-transform: uppercase;
-background: var(–red);
-color: #fff;
-padding: 10px 24px;
-text-decoration: none;
-clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-transition: background 0.3s, transform 0.2s;
-}
-.nav-cta:hover { background: #e00010; transform: scale(1.03); }
-
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-.hamburger span { width: 26px; height: 2px; background: var(–white); display: block; }
-
-/* ─── HERO ─────────────────────────────────────── */
-.hero {
-position: relative;
-min-height: 100vh;
-display: flex;
-align-items: flex-end;
-overflow: hidden;
-background: var(–black);
-}
-
-.hero-bg {
-position: absolute; inset: 0;
-background:
-radial-gradient(ellipse 60% 80% at 65% 50%, rgba(192,0,10,0.12) 0%, transparent 65%),
-radial-gradient(ellipse 40% 60% at 30% 80%, rgba(200,151,42,0.06) 0%, transparent 60%),
-linear-gradient(135deg, #050505 0%, #0f0808 50%, #050505 100%);
-}
-
-/* animated scanlines */
-.hero-bg::before {
-content: ‘’;
-position: absolute; inset: 0;
-background: repeating-linear-gradient(
-0deg,
-transparent,
-transparent 2px,
-rgba(0,0,0,0.15) 2px,
-rgba(0,0,0,0.15) 4px
-);
-pointer-events: none;
-}
-
-/* vignette */
-.hero-bg::after {
-content: ‘’;
-position: absolute; inset: 0;
-background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 30%, rgba(0,0,0,0.8) 100%);
-pointer-events: none;
-}
-
-/* particles canvas placeholder — CSS particles */
-.particles {
-position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-}
-.particle {
-position: absolute;
-width: 2px; height: 2px;
-background: var(–gold);
-border-radius: 50%;
-opacity: 0;
-animation: floatUp var(–dur, 8s) var(–delay, 0s) infinite ease-in;
-}
-
-@keyframes floatUp {
-0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-10% { opacity: 0.6; }
-90% { opacity: 0.3; }
-100% { transform: translateY(-20vh) translateX(var(–drift, 30px)); opacity: 0; }
-}
-
-.hero-image-wrap {
-position: absolute;
-right: 5%;
-bottom: 0;
-height: 92%;
-width: 42%;
-display: flex;
-align-items: flex-end;
-justify-content: center;
-}
-
-.hero-image-wrap img {
-height: 100%;
-width: 100%;
-object-fit: contain;
-object-position: bottom;
-filter: contrast(1.1) brightness(0.92);
-mask-image: linear-gradient(to top, black 70%, transparent 100%),
-linear-gradient(to right, transparent 0%, black 10%);
-mask-composite: intersect;
--webkit-mask-image: linear-gradient(to top, black 70%, transparent 100%),
-linear-gradient(to right, transparent 0%, black 10%);
--webkit-mask-composite: source-in;
-}
-
-/* red slash accent */
-.hero-slash {
-position: absolute;
-top: 0; bottom: 0;
-right: 43%;
-width: 3px;
-background: linear-gradient(to bottom, transparent 0%, var(–red) 30%, var(–red) 70%, transparent 100%);
-box-shadow: 0 0 20px var(–red), 0 0 40px rgba(192,0,10,0.4);
-}
-
-.hero-content {
-position: relative;
-z-index: 10;
-padding: 0 60px 80px;
-max-width: 620px;
-}
-
-.hero-eyebrow {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.75rem;
-font-weight: 400;
-letter-spacing: 5px;
-text-transform: uppercase;
-color: var(–red);
-margin-bottom: 16px;
-display: flex; align-items: center; gap: 14px;
-opacity: 0;
-animation: fadeUp 0.8s 0.3s forwards;
-}
-.hero-eyebrow::before {
-content: ‘’; display: block;
-width: 40px; height: 1px;
-background: var(–red);
-}
-
-.hero-name {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(3.5rem, 7vw, 6.5rem);
-line-height: 0.9;
-letter-spacing: 2px;
-color: var(–white);
-text-transform: uppercase;
-opacity: 0;
-animation: fadeUp 0.8s 0.5s forwards;
-}
-.hero-name .line2 {
-display: block;
-color: transparent;
--webkit-text-stroke: 1px rgba(245,245,245,0.4);
-font-size: clamp(2.8rem, 5.5vw, 5rem);
-}
-
-.hero-disciplines {
-display: flex; gap: 8px; flex-wrap: wrap;
-margin: 24px 0;
-opacity: 0;
-animation: fadeUp 0.8s 0.7s forwards;
-}
-.hero-disciplines span {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.7rem;
-font-weight: 500;
-letter-spacing: 3px;
-text-transform: uppercase;
-padding: 6px 14px;
-border: 1px solid rgba(192,0,10,0.5);
-color: var(–gray-light);
-background: rgba(192,0,10,0.06);
-clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-}
-
-.hero-tagline {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(1.6rem, 3vw, 2.6rem);
-color: var(–white);
-line-height: 1.1;
-margin-bottom: 16px;
-opacity: 0;
-animation: fadeUp 0.8s 0.9s forwards;
-}
-.hero-tagline .accent { color: var(–gold); }
-
-.hero-sub {
-font-size: 0.95rem;
-font-weight: 300;
-line-height: 1.7;
-color: var(–gray-light);
-max-width: 480px;
-margin-bottom: 40px;
-opacity: 0;
-animation: fadeUp 0.8s 1.1s forwards;
-}
-
-.hero-btns {
-display: flex; gap: 16px; flex-wrap: wrap;
-opacity: 0;
-animation: fadeUp 0.8s 1.3s forwards;
-}
-
-.btn-primary {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.85rem;
-font-weight: 600;
-letter-spacing: 3px;
-text-transform: uppercase;
-background: var(–red);
-color: #fff;
-padding: 16px 36px;
-text-decoration: none;
-clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-transition: all 0.3s;
-display: inline-block;
-}
-.btn-primary:hover { background: #e00010; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(192,0,10,0.4); }
-
-.btn-secondary {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.85rem;
-font-weight: 500;
-letter-spacing: 3px;
-text-transform: uppercase;
-background: transparent;
-color: var(–white);
-padding: 15px 36px;
-text-decoration: none;
-border: 1px solid rgba(245,245,245,0.3);
-clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-transition: all 0.3s;
-display: inline-block;
-display: flex; align-items: center; gap: 10px;
-}
-.btn-secondary:hover { border-color: var(–white); background: rgba(255,255,255,0.05); }
-.btn-secondary svg { width: 20px; height: 20px; }
-
-/* hero stats bar */
-.hero-stats {
-position: absolute;
-bottom: 0; left: 0; right: 0;
-display: flex;
-border-top: 1px solid rgba(255,255,255,0.06);
-background: rgba(5,5,5,0.8);
-backdrop-filter: blur(10px);
-z-index: 20;
-}
-.hero-stat {
-flex: 1;
-padding: 20px 40px;
-display: flex; flex-direction: column;
-border-right: 1px solid rgba(255,255,255,0.05);
-opacity: 0;
-animation: fadeUp 0.6s calc(1.5s + var(–i) * 0.15s) forwards;
-}
-.hero-stat:last-child { border-right: none; }
-.hero-stat .num {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 2.4rem;
-color: var(–gold);
-line-height: 1;
-}
-.hero-stat .label {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.65rem;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(–gray);
-margin-top: 4px;
-}
-
-@keyframes fadeUp {
-from { opacity: 0; transform: translateY(30px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── SECTION BASE ─────────────────────────────── */
-section { padding: 100px 60px; }
-.section-eyebrow {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.7rem;
-letter-spacing: 5px;
-text-transform: uppercase;
-color: var(–red);
-display: flex; align-items: center; gap: 14px;
-margin-bottom: 16px;
-}
-.section-eyebrow::before {
-content: ‘’; width: 30px; height: 1px; background: var(–red);
-}
-.section-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(2.8rem, 5vw, 5rem);
-line-height: 0.95;
-letter-spacing: 1px;
-color: var(–white);
-}
-.section-title .hollow {
-color: transparent;
--webkit-text-stroke: 1px rgba(245,245,245,0.3);
-}
-
-/* ─── SOBRE ─────────────────────────────────────── */
-.sobre {
-background: var(–graphite);
-position: relative;
-overflow: hidden;
-}
-.sobre::before {
-content: ‘’;
-position: absolute; top: 0; right: 0;
-width: 50%; height: 100%;
-background: radial-gradient(ellipse at 80% 50%, rgba(192,0,10,0.07) 0%, transparent 70%);
-pointer-events: none;
-}
-
-.sobre-inner {
-max-width: 1300px; margin: 0 auto;
-display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-}
-
-.sobre-images {
-position: relative; height: 600px;
-}
-
-.sobre-img-main {
-position: absolute;
-left: 0; top: 0;
-width: 72%; height: 85%;
-object-fit: cover;
-object-position: top;
-filter: grayscale(20%) contrast(1.05);
-}
-
-.sobre-img-secondary {
-position: absolute;
-right: 0; bottom: 0;
-width: 55%; height: 65%;
-object-fit: cover;
-border: 3px solid var(–graphite);
-filter: grayscale(10%);
-}
-
-/* gold frame accent */
-.sobre-images::after {
-content: ‘’;
-position: absolute;
-top: 20px; left: 20px;
-width: 60%; height: 60%;
-border-top: 2px solid var(–gold);
-border-left: 2px solid var(–gold);
-pointer-events: none;
-opacity: 0.4;
-}
-
-.sobre-content { }
-.sobre-text {
-font-size: 1rem;
-font-weight: 300;
-line-height: 1.8;
-color: var(–gray-light);
-margin: 24px 0;
-}
-.sobre-text strong { color: var(–white); font-weight: 500; }
-
-.sobre-badges {
-display: flex; flex-direction: column; gap: 12px;
-margin-top: 32px;
-}
-.badge {
-display: flex; align-items: center; gap: 14px;
-padding: 14px 20px;
-background: rgba(255,255,255,0.03);
-border-left: 3px solid var(–red);
-transition: background 0.3s, transform 0.3s;
-}
-.badge:hover { background: rgba(192,0,10,0.08); transform: translateX(6px); }
-.badge-icon {
-font-size: 1.4rem; width: 36px; text-align: center;
-}
-.badge-text {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.85rem;
-font-weight: 500;
-letter-spacing: 1px;
-color: var(–white);
-}
-
-/* ─── MODALIDADES ───────────────────────────────── */
-.modalidades {
-background: var(–black);
-position: relative;
-}
-
-.modalidades-header {
-max-width: 1300px; margin: 0 auto 60px;
-display: flex; justify-content: space-between; align-items: flex-end;
-}
-
-.cards-grid {
-max-width: 1300px; margin: 0 auto;
-display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
-}
-
-.card {
-position: relative;
-height: 500px;
-overflow: hidden;
-cursor: pointer;
-background: var(–graphite2);
-}
-
-.card-bg {
-position: absolute; inset: 0;
-transition: transform 0.6s ease;
-}
-
-.card:nth-child(1) .card-bg {
-background: linear-gradient(160deg, #1a0505 0%, #0a0000 60%, #050505 100%);
-}
-.card:nth-child(2) .card-bg {
-background: linear-gradient(160deg, #0d0d1a 0%, #050510 60%, #050505 100%);
-}
-.card:nth-child(3) .card-bg {
-background: linear-gradient(160deg, #0a1a0a 0%, #020d02 60%, #050505 100%);
-}
-.card:nth-child(4) .card-bg {
-background: linear-gradient(160deg, #1a0a00 0%, #0d0500 60%, #050505 100%);
-}
-
-.card:hover .card-bg { transform: scale(1.05); }
-
-.card-icon {
-position: absolute;
-top: 40px; right: 30px;
-font-size: 5rem;
-opacity: 0.06;
-transition: opacity 0.4s, transform 0.4s;
-line-height: 1;
-}
-.card:hover .card-icon { opacity: 0.12; transform: scale(1.1) rotate(-5deg); }
-
-.card-content {
-position: absolute;
-bottom: 0; left: 0; right: 0;
-padding: 40px 30px;
-background: linear-gradient(to top, rgba(5,5,5,0.97) 0%, transparent 100%);
-transition: transform 0.4s;
-}
-
-.card-label {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.65rem;
-letter-spacing: 4px;
-text-transform: uppercase;
-color: var(–red);
-margin-bottom: 8px;
-}
-
-.card-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 2.4rem;
-letter-spacing: 1px;
-color: var(–white);
-line-height: 1;
-margin-bottom: 14px;
-}
-
-.card-desc {
-font-size: 0.88rem;
-font-weight: 300;
-line-height: 1.6;
-color: var(–gray);
-max-height: 0;
-overflow: hidden;
-transition: max-height 0.4s ease, opacity 0.4s;
-opacity: 0;
-}
-.card:hover .card-desc { max-height: 100px; opacity: 1; }
-
-.card-line {
-width: 30px; height: 2px;
-background: var(–gold);
-margin-bottom: 12px;
-transition: width 0.4s;
-}
-.card:hover .card-line { width: 60px; }
-
-/* ─── BENEFÍCIOS ────────────────────────────────── */
-.beneficios {
-background: var(–graphite);
-position: relative;
-overflow: hidden;
-}
-.beneficios::before {
-content: ‘’;
-position: absolute;
-top: 50%; left: 50%; transform: translate(-50%, -50%);
-width: 600px; height: 600px;
-background: radial-gradient(circle, rgba(192,0,10,0.05) 0%, transparent 70%);
-pointer-events: none;
-}
-
-.beneficios-inner { max-width: 1300px; margin: 0 auto; }
-
-.beneficios-grid {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 2px;
-margin-top: 60px;
-}
-
-.benefit-item {
-padding: 36px 28px;
-background: rgba(255,255,255,0.02);
-border-top: 2px solid transparent;
-transition: border-color 0.3s, background 0.3s, transform 0.3s;
-cursor: default;
-}
-.benefit-item:hover {
-border-top-color: var(–red);
-background: rgba(192,0,10,0.05);
-transform: translateY(-4px);
-}
-
-.benefit-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
-.benefit-title {
-font-family: ‘Oswald’, sans-serif;
-font-size: 1rem;
-font-weight: 600;
-letter-spacing: 1px;
-text-transform: uppercase;
-color: var(–white);
-margin-bottom: 8px;
-}
-.benefit-desc {
-font-size: 0.85rem;
-font-weight: 300;
-color: var(–gray);
-line-height: 1.6;
-}
-
-/* ─── NÚMEROS ───────────────────────────────────── */
-.numeros {
-background: var(–black);
-position: relative;
-overflow: hidden;
-}
-.numeros::after {
-content: ‘ELITE’;
-position: absolute;
-top: 50%; left: 50%; transform: translate(-50%, -50%);
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 30vw;
-color: rgba(255,255,255,0.015);
-white-space: nowrap;
-pointer-events: none;
-letter-spacing: 10px;
-}
-
-.numeros-inner { max-width: 1300px; margin: 0 auto; }
-
-.numeros-grid {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 0;
-border: 1px solid rgba(255,255,255,0.06);
-margin-top: 60px;
-}
-
-.numero-item {
-padding: 50px 40px;
-border-right: 1px solid rgba(255,255,255,0.06);
-position: relative;
-overflow: hidden;
-transition: background 0.4s;
-}
-.numero-item:last-child { border-right: none; }
-.numero-item:hover { background: rgba(192,0,10,0.04); }
-.numero-item::before {
-content: ‘’;
-position: absolute; bottom: 0; left: 0; right: 0;
-height: 2px;
-background: linear-gradient(to right, var(–red), var(–gold));
-transform: scaleX(0);
-transition: transform 0.4s;
-transform-origin: left;
-}
-.numero-item:hover::before { transform: scaleX(1); }
-
-.numero-val {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 4.5rem;
-color: var(–gold);
-line-height: 1;
-display: block;
-}
-.numero-label {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.75rem;
-letter-spacing: 3px;
-text-transform: uppercase;
-color: var(–gray);
-margin-top: 6px;
-display: block;
-}
-
-/* ─── COMO FUNCIONAM ────────────────────────────── */
-.como {
-background: var(–graphite);
-position: relative;
-overflow: hidden;
-}
-
-.como-inner {
-max-width: 1300px; margin: 0 auto;
-display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-}
-
-.como-image {
-position: relative;
-}
-.como-image img {
-width: 100%; height: 600px;
-object-fit: cover;
-object-position: top;
-filter: contrast(1.1);
-}
-.como-image::before {
-content: ‘’;
-position: absolute; inset: 0;
-background: linear-gradient(135deg, rgba(192,0,10,0.2) 0%, transparent 60%);
-z-index: 1;
-}
-/* corner frame */
-.como-image::after {
-content: ‘’;
-position: absolute;
-bottom: -12px; right: -12px;
-width: 60%; height: 60%;
-border-bottom: 2px solid var(–gold);
-border-right: 2px solid var(–gold);
-opacity: 0.4;
-pointer-events: none;
-z-index: 0;
-}
-
-.como-steps { display: flex; flex-direction: column; gap: 0; }
-
-.step {
-display: flex; gap: 24px; align-items: flex-start;
-padding: 28px 0;
-border-bottom: 1px solid rgba(255,255,255,0.05);
-transition: transform 0.3s;
-}
-.step:hover { transform: translateX(8px); }
-.step:last-child { border-bottom: none; }
-
-.step-num {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 3rem;
-color: rgba(192,0,10,0.3);
-line-height: 1;
-min-width: 50px;
-transition: color 0.3s;
-}
-.step:hover .step-num { color: var(–red); }
-
-.step-info { }
-.step-title {
-font-family: ‘Oswald’, sans-serif;
-font-size: 1rem;
-font-weight: 600;
-letter-spacing: 1px;
-text-transform: uppercase;
-color: var(–white);
-margin-bottom: 6px;
-}
-.step-desc {
-font-size: 0.88rem;
-font-weight: 300;
-color: var(–gray);
-line-height: 1.6;
-}
-
-/* ─── QUOTE SECTION ─────────────────────────────── */
-.quote-section {
-background: var(–black);
-position: relative;
-overflow: hidden;
-padding: 120px 60px;
-}
-.quote-section::before {
-content: ‘’;
-position: absolute; inset: 0;
-background:
-radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192,0,10,0.1) 0%, transparent 70%);
-pointer-events: none;
-}
-
-.quote-inner {
-max-width: 900px; margin: 0 auto; text-align: center;
-}
-
-.quote-mark {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 8rem;
-color: rgba(192,0,10,0.2);
-line-height: 0.6;
-display: block;
-margin-bottom: 20px;
-}
-
-.quote-text {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(2.2rem, 4vw, 3.8rem);
-line-height: 1.1;
-color: var(–white);
-margin-bottom: 24px;
-}
-.quote-text .gold { color: var(–gold); }
-.quote-text .red { color: var(–red); }
-
-.quote-body {
-font-size: 1rem;
-font-weight: 300;
-color: var(–gray-light);
-line-height: 1.8;
-max-width: 680px;
-margin: 0 auto 40px;
-}
-
-/* ─── CORINTHIANS SECTION ───────────────────────── */
-.corinthians {
-background: var(–graphite2);
-padding: 80px 60px;
-position: relative;
-overflow: hidden;
-border-top: 1px solid rgba(255,255,255,0.04);
-border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-
-.corinthians-inner {
-max-width: 1300px; margin: 0 auto;
-display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-}
-
-.corinthians-img {
-width: 100%; height: 400px;
-object-fit: cover;
-object-position: top;
-filter: contrast(1.05) saturate(0.8);
-}
-
-.corinthians-text { }
-.corinthians-badge {
-display: inline-flex; align-items: center; gap: 10px;
-padding: 8px 16px;
-background: rgba(200,151,42,0.1);
-border: 1px solid rgba(200,151,42,0.3);
-margin-bottom: 24px;
-}
-.corinthians-badge span {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.7rem;
-letter-spacing: 3px;
-text-transform: uppercase;
-color: var(–gold);
-}
-
-.corinthians-body {
-font-size: 1rem;
-font-weight: 300;
-color: var(–gray-light);
-line-height: 1.8;
-margin-top: 20px;
-}
-.corinthians-body strong { color: var(–white); font-weight: 500; }
-
-/* ─── CTA ───────────────────────────────────────── */
-.cta-section {
-background: var(–black);
-text-align: center;
-padding: 140px 60px;
-position: relative;
-overflow: hidden;
-}
-.cta-section::before {
-content: ‘’;
-position: absolute; inset: 0;
-background:
-radial-gradient(ellipse 70% 70% at 50% 50%, rgba(192,0,10,0.08) 0%, transparent 70%);
-pointer-events: none;
-}
-/* top border beam */
-.cta-section::after {
-content: ‘’;
-position: absolute; top: 0; left: 10%; right: 10%;
-height: 1px;
-background: linear-gradient(to right, transparent, var(–red), var(–gold), var(–red), transparent);
-}
-
-.cta-inner { max-width: 800px; margin: 0 auto; position: relative; }
-
-.cta-eyebrow {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.75rem;
-letter-spacing: 5px;
-text-transform: uppercase;
-color: var(–red);
-margin-bottom: 20px;
-}
-
-.cta-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(3rem, 6vw, 6rem);
-line-height: 0.95;
-color: var(–white);
-margin-bottom: 24px;
-}
-.cta-title .hollow {
-display: block;
-color: transparent;
--webkit-text-stroke: 1px rgba(245,245,245,0.3);
-}
-
-.cta-sub {
-font-size: 1rem;
-font-weight: 300;
-color: var(–gray-light);
-line-height: 1.7;
-max-width: 560px;
-margin: 0 auto 48px;
-}
-
-.cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-
-.btn-gold {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.9rem;
-font-weight: 600;
-letter-spacing: 3px;
-text-transform: uppercase;
-background: linear-gradient(135deg, var(–gold), var(–gold-light));
-color: var(–black);
-padding: 18px 44px;
-text-decoration: none;
-clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-transition: all 0.3s;
-display: inline-flex; align-items: center; gap: 10px;
-}
-.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(200,151,42,0.3); }
-
-/* ─── FOOTER ─────────────────────────────────────── */
-footer {
-background: var(–graphite2);
-padding: 40px 60px;
-border-top: 1px solid rgba(255,255,255,0.04);
-display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
-}
-
-.footer-logo {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.4rem;
-letter-spacing: 3px;
-color: var(–white);
-}
-.footer-logo span { color: var(–red); }
-
-.footer-text {
-font-family: ‘Oswald’, sans-serif;
-font-size: 0.7rem;
-letter-spacing: 2px;
-color: var(–gray);
-text-transform: uppercase;
-}
-
-/* ─── WHATSAPP FLOAT ─────────────────────────────── */
-.wa-float {
-position: fixed;
-bottom: 30px; right: 30px;
-z-index: 999;
-width: 60px; height: 60px;
-background: #25d366;
-border-radius: 50%;
-display: flex; align-items: center; justify-content: center;
-text-decoration: none;
-box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-transition: transform 0.3s, box-shadow 0.3s;
-animation: pulse-wa 3s infinite;
-}
-.wa-float:hover {
-transform: scale(1.1);
-box-shadow: 0 8px 30px rgba(37,211,102,0.6);
-animation: none;
-}
-.wa-float svg { width: 32px; height: 32px; fill: #fff; }
-
-@keyframes pulse-wa {
-0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
-50% { box-shadow: 0 4px 40px rgba(37,211,102,0.7); }
-}
-
-/* ─── SCROLL REVEAL ─────────────────────────────── */
-.reveal {
-opacity: 0;
-transform: translateY(40px);
-transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible {
-opacity: 1;
-transform: translateY(0);
-}
-
-/* ─── RESPONSIVE ────────────────────────────────── */
-@media (max-width: 1024px) {
-nav { padding: 16px 30px; }
-.nav-links { display: none; }
-.hamburger { display: flex; }
-section { padding: 80px 30px; }
-.hero-content { padding: 0 30px 180px; }
-.sobre-inner, .como-inner, .corinthians-inner { grid-template-columns: 1fr; gap: 40px; }
-.sobre-images { height: 350px; }
-.cards-grid { grid-template-columns: repeat(2, 1fr); }
-.beneficios-grid { grid-template-columns: repeat(2, 1fr); }
-.numeros-grid { grid-template-columns: repeat(2, 1fr); }
-.hero-image-wrap { width: 55%; right: 0; height: 65%; }
-.hero-stats { flex-wrap: wrap; }
-.hero-stat { flex: 1 1 40%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-}
-
-@media (max-width: 640px) {
-.hero-content { padding: 0 20px 240px; }
-.cards-grid { grid-template-columns: 1fr; }
-.beneficios-grid { grid-template-columns: 1fr; }
-.numeros-grid { grid-template-columns: 1fr 1fr; }
-.hero-image-wrap { opacity: 0.3; width: 100%; }
-.hero-slash { display: none; }
-.cta-section { padding: 80px 20px; }
-footer { padding: 30px 20px; flex-direction: column; text-align: center; }
-section { padding: 60px 20px; }
-}
-</style>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aulas particulares de Muay Thai, Jiu-Jitsu, Boxe e MMA com Clayton Rodrigues Israel. Treinamento personalizado para todos os níveis.">
+  <meta name="theme-color" content="#090909">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PersonalFight | Clayton Israel — Artes Marciais">
+  <meta property="og:description" content="Aulas particulares de Muay Thai, Jiu-Jitsu, Boxe e MMA, adaptadas ao seu nível, à sua rotina e aos seus objetivos.">
+  <title>PersonalFight | Clayton Israel — Artes Marciais</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23e31b23'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial' font-size='28' font-weight='700' fill='white'%3EPF%3C/text%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="assets/images/clayton-muay-thai.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-<!-- NAV -->
-
-<nav id="navbar">
-  <div class="nav-logo">CLAYTON<span>.</span>ISRAEL</div>
-  <ul class="nav-links">
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#modalidades">Modalidades</a></li>
-    <li><a href="#como">Como Funciona</a></li>
-    <li><a href="#numeros">Trajetória</a></li>
-  </ul>
-  <a href="https://wa.me/5535984735176?text=Ol%C3%A1%2C+vim+pelo+seu+site+e+gostaria+de+agendar+uma+aula." class="nav-cta" target="_blank">Agendar Aula</a>
-  <div class="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-
-<!-- HERO -->
-
-<section class="hero" id="hero">
-  <div class="hero-bg"></div>
-
-  <!-- CSS particles -->
-
-  <div class="particles" id="particles"></div>
-
-  <div class="hero-slash"></div>
-
-  <div class="hero-image-wrap">
-    <img src="img1.jpg" alt="Clayton Israel — Muay Thai">
-  </div>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow">Professor Elite · Aulas Particulares</div>
-
-```
-<h1 class="hero-name">
-  CLAYTON
-  <span class="line2">RODRIGUES ISRAEL</span>
-</h1>
-
-<div class="hero-disciplines">
-  <span>Muay Thai</span>
-  <span>Jiu-Jitsu</span>
-  <span>Boxe</span>
-  <span>MMA</span>
-</div>
-
-<p class="hero-tagline">Forje disciplina, <span class="accent">força</span> e confiança através das artes marciais.</p>
-
-<p class="hero-sub">Professor com mais de 15 anos de experiência, ex-atleta profissional de MMA do Corinthians e mais de 80 competições no currículo.</p>
-
-<div class="hero-btns">
-  <a href="https://wa.me/5535984735176?text=Ol%C3%A1%2C+vim+pelo+seu+site+e+gostaria+de+agendar+uma+aula." class="btn-primary" target="_blank">Agendar Aula</a>
-  <a href="https://wa.me/5535984735176?text=Ol%C3%A1%2C+vim+pelo+seu+site+e+gostaria+de+agendar+uma+aula." class="btn-secondary" target="_blank">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Falar no WhatsApp
-  </a>
-</div>
-```
-
-  </div>
-
-  <!-- stats bar -->
-
-  <div class="hero-stats">
-    <div class="hero-stat" style="--i:0">
-      <span class="num">+15</span>
-      <span class="label">Anos Ensinando</span>
-    </div>
-    <div class="hero-stat" style="--i:1">
-      <span class="num">+80</span>
-      <span class="label">Competições</span>
-    </div>
-    <div class="hero-stat" style="--i:2">
-      <span class="num">3</span>
-      <span class="label">Anos no Corinthians</span>
-    </div>
-    <div class="hero-stat" style="--i:3">
-      <span class="num">4</span>
-      <span class="label">Modalidades</span>
-    </div>
-  </div>
-</section>
-
-<!-- SOBRE -->
-
-<section class="sobre" id="sobre">
-  <div class="sobre-inner">
-    <div class="sobre-images reveal">
-      <img class="sobre-img-main" src="img2.jpg" alt="Clayton com cinturões">
-      <img class="sobre-img-secondary" src="img3.jpg" alt="Clayton Jiu-Jitsu">
-    </div>
-
-```
-<div class="sobre-content reveal">
-  <div class="section-eyebrow">Sobre o Professor</div>
-  <h2 class="section-title">Uma vida dedicada às <span class="hollow">ARTES MARCIAIS</span></h2>
-
-  <p class="sobre-text">
-    <strong>Clayton Rodrigues Israel</strong> treina artes marciais desde os 5 anos de idade. Mais de três décadas de dedicação forjaram um profissional com rara combinação de experiência competitiva e capacidade didática.
-  </p>
-  <p class="sobre-text">
-    Ex-atleta profissional contratado por <strong>3 anos pela equipe de MMA do Sport Clube Corinthians Paulista</strong>, Clayton acumulou mais de <strong>80 competições</strong> em sua carreira e teve contato com grandes nomes do esporte, incluindo <strong>Anderson Silva</strong>.
-  </p>
-  <p class="sobre-text">
-    Hoje, com mais de <strong>15 anos de experiência no ensino</strong>, Clayton transforma alunos de todos os níveis — do iniciante absoluto ao atleta competitivo — através de um método personalizado, intenso e transformador.
-  </p>
-
-  <div class="sobre-badges">
-    <div class="badge">
-      <span class="badge-icon">⚫</span>
-      <span class="badge-text">Grau Preto em Muay Thai</span>
-    </div>
-    <div class="badge">
-      <span class="badge-icon">🥋</span>
-      <span class="badge-text">Faixa Preta em Jiu-Jitsu</span>
-    </div>
-    <div class="badge">
-      <span class="badge-icon">🥊</span>
-      <span class="badge-text">Professor de Boxe</span>
-    </div>
-    <div class="badge">
-      <span class="badge-icon">🏆</span>
-      <span class="badge-text">Ex-Atleta Profissional MMA — Corinthians</span>
-    </div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- MODALIDADES -->
-
-<section class="modalidades" id="modalidades">
-  <div class="modalidades-header reveal">
-    <div>
-      <div class="section-eyebrow">Especialidades</div>
-      <h2 class="section-title">MODALIDADES<br><span class="hollow">DE ENSINO</span></h2>
-    </div>
-  </div>
-
-  <div class="cards-grid">
-    <div class="card reveal">
-      <div class="card-bg"></div>
-      <div class="card-icon">🥊</div>
-      <div class="card-content">
-        <div class="card-label">Arte de Elite</div>
-        <div class="card-line"></div>
-        <div class="card-title">MUAY THAI</div>
-        <div class="card-desc">A Arte dos 8 Membros. Potência, velocidade e técnica refinada. Desenvolvido sob supervisão de Grau Preto, o treino mais completo em striking do mundo.</div>
-      </div>
-    </div>
-    <div class="card reveal">
-      <div class="card-bg"></div>
-      <div class="card-icon">⚫</div>
-      <div class="card-content">
-        <div class="card-label">Arte Suave</div>
-        <div class="card-line"></div>
-        <div class="card-title">JIU-JITSU</div>
-        <div class="card-desc">Domínio do chão. Defesa pessoal real, controle, finalizações. Instruído por Faixa Preta com vasta experiência competitiva e didática.</div>
-      </div>
-    </div>
-    <div class="card reveal">
-      <div class="card-bg"></div>
-      <div class="card-icon">🥋</div>
-      <div class="card-content">
-        <div class="card-label">O Esporte Nobre</div>
-        <div class="card-line"></div>
-        <div class="card-title">BOXE</div>
-        <div class="card-desc">Footwork, jab, cruzado, gancho e uppercut. Boxe para condicionamento, defesa pessoal e competição. Técnica de alto nível desde o primeiro treino.</div>
-      </div>
-    </div>
-    <div class="card reveal">
-      <div class="card-bg"></div>
-      <div class="card-icon">🏆</div>
-      <div class="card-content">
-        <div class="card-label">Combate Total</div>
-        <div class="card-line"></div>
-        <div class="card-title">MMA</div>
-        <div class="card-desc">A fusão de todas as artes marciais. Treinado por um ex-atleta profissional do Corinthians com metodologia aplicada em alto rendimento.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BENEFÍCIOS -->
-
-<section class="beneficios" id="beneficios">
-  <div class="beneficios-inner">
-    <div class="reveal">
-      <div class="section-eyebrow">Transformação Completa</div>
-      <h2 class="section-title">MAIS DO QUE<br><span class="hollow">UMA LUTA</span></h2>
-    </div>
-
-```
-<div class="beneficios-grid">
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">⚡</span>
-    <div class="benefit-title">Condicionamento Físico</div>
-    <div class="benefit-desc">Desenvolva força, resistência e agilidade além dos seus limites atuais.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">🔥</span>
-    <div class="benefit-title">Emagrecimento</div>
-    <div class="benefit-desc">Queima calórica intensa aliada a treinos funcionais de alta performance.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">🧠</span>
-    <div class="benefit-title">Disciplina Mental</div>
-    <div class="benefit-desc">As artes marciais forjam caráter, foco e resiliência que transcendem o tatame.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">🛡️</span>
-    <div class="benefit-title">Defesa Pessoal</div>
-    <div class="benefit-desc">Técnicas reais e eficazes para se proteger em qualquer situação de risco.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">💪</span>
-    <div class="benefit-title">Autoconfiança</div>
-    <div class="benefit-desc">Cada treino constrói uma versão mais forte, mais confiante e mais capaz de você.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">🎯</span>
-    <div class="benefit-title">Foco Total</div>
-    <div class="benefit-desc">Aprenda a concentrar energia e atenção com precisão de atleta profissional.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">🌊</span>
-    <div class="benefit-title">Redução do Estresse</div>
-    <div class="benefit-desc">Libere tensões, melhore o sono e transforme pressão em potência.</div>
-  </div>
-  <div class="benefit-item reveal">
-    <span class="benefit-icon">❤️</span>
-    <div class="benefit-title">Saúde Mental</div>
-    <div class="benefit-desc">Endorfinas, propósito e comunidade — um estilo de vida que transforma de dentro para fora.</div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- NÚMEROS -->
-
-<section class="numeros" id="numeros">
-  <div class="numeros-inner">
-    <div class="reveal">
-      <div class="section-eyebrow">Trajetória</div>
-      <h2 class="section-title">NÚMEROS DE<br><span class="hollow">UM CAMPEÃO</span></h2>
-    </div>
-
-```
-<div class="numeros-grid">
-  <div class="numero-item reveal">
-    <span class="numero-val">+15</span>
-    <span class="numero-label">Anos Ensinando Artes Marciais</span>
-  </div>
-  <div class="numero-item reveal">
-    <span class="numero-val">+80</span>
-    <span class="numero-label">Competições na Carreira</span>
-  </div>
-  <div class="numero-item reveal">
-    <span class="numero-val">3</span>
-    <span class="numero-label">Anos como Atleta do Corinthians</span>
-  </div>
-  <div class="numero-item reveal">
-    <span class="numero-val">5</span>
-    <span class="numero-label">Anos de Idade — Início no Esporte</span>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- CORINTHIANS -->
-
-<section class="corinthians">
-  <div class="corinthians-inner">
-    <img class="corinthians-img reveal" src="img4.jpg" alt="Clayton no Corinthians MMA">
-
-```
-<div class="corinthians-text reveal">
-  <div class="corinthians-badge">
-    <span>⚫ Carreira Profissional</span>
-  </div>
-  <div class="section-eyebrow">Passagem Histórica</div>
-  <h2 class="section-title">ATLETA<br><span class="hollow">CORINTHIANS</span></h2>
-  <p class="corinthians-body">
-    Durante <strong>3 anos</strong>, Clayton integrou o seleto grupo de atletas profissionais da <strong>equipe de MMA do Sport Clube Corinthians Paulista</strong>, um dos maiores clubes do Brasil e do mundo.
-  </p>
-  <p class="corinthians-body" style="margin-top:14px">
-    Essa experiência forjou uma visão de alto rendimento que hoje Clayton transmite para cada aluno — independente do nível, do objetivo ou da idade. Quem treina com Clayton aprende com alguém que <strong>viveu o esporte de elite de dentro</strong>.
-  </p>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- COMO FUNCIONAM AS AULAS -->
-
-<section class="como" id="como">
-  <div class="como-inner">
-    <div class="como-content reveal">
-      <div class="section-eyebrow">Metodologia</div>
-      <h2 class="section-title">COMO<br><span class="hollow">FUNCIONAM</span><br>AS AULAS</h2>
-
-```
-  <div class="como-steps" style="margin-top: 40px">
-    <div class="step">
-      <span class="step-num">01</span>
-      <div class="step-info">
-        <div class="step-title">Para Todos os Níveis</div>
-        <div class="step-desc">Do iniciante absoluto ao atleta competitivo. O treino é adaptado ao seu nível atual e evolui com você.</div>
-      </div>
-    </div>
-    <div class="step">
-      <span class="step-num">02</span>
-      <div class="step-info">
-        <div class="step-title">Atendimento 100% Personalizado</div>
-        <div class="step-desc">Aulas individuais com foco total no seu objetivo. Sem distrações. Sem coletivos. Evolução acelerada.</div>
-      </div>
-    </div>
-    <div class="step">
-      <span class="step-num">03</span>
-      <div class="step-info">
-        <div class="step-title">A Domicílio ou em Academia</div>
-        <div class="step-desc">Clayton vai até você ou recebe na academia. Flexibilidade total de local e horário para o seu dia a dia.</div>
-      </div>
-    </div>
-    <div class="step">
-      <span class="step-num">04</span>
-      <div class="step-info">
-        <div class="step-title">Treino Adaptado ao Seu Objetivo</div>
-        <div class="step-desc">Emagrecer, competir, se defender ou melhorar a saúde mental — o treino é construído ao redor do que você quer alcançar.</div>
-      </div>
-    </div>
-    <div class="step">
-      <span class="step-num">05</span>
-      <div class="step-info">
-        <div class="step-title">Resultados Reais</div>
-        <div class="step-desc">Quem ensina é alguém que viveu o esporte de elite. Metodologia testada em competições de alto nível.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="como-image reveal">
-  <img src="img5.jpg" alt="Clayton Israel — Jiu-Jitsu">
-</div>
-```
-
-  </div>
-</section>
-
-<!-- QUOTE -->
-
-<section class="quote-section">
-  <div class="quote-inner reveal">
-    <span class="quote-mark">"</span>
-    <h2 class="quote-text">
-      As artes marciais vão muito além da <span class="red">luta.</span><br>
-      Elas constroem quem você é <span class="gold">fora do tatame.</span>
-    </h2>
-    <p class="quote-body">
-      As artes marciais desenvolvem disciplina, controle emocional, resistência física, autoconfiança e equilíbrio mental. Com mais de 15 anos de experiência no ensino e uma trajetória construída dentro das competições, ofereço aulas personalizadas para quem deseja evoluir de verdade — seja para melhorar o condicionamento físico, aprender defesa pessoal, aliviar o estresse ou buscar alta performance.
-    </p>
-    <p style="font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:var(--gold); letter-spacing:3px">
-      SEU RESULTADO COMEÇA COM A DECISÃO DE COMEÇAR.
-    </p>
-  </div>
-</section>
-
-<!-- CTA -->
-
-<section class="cta-section" id="contato">
-  <div class="cta-inner reveal">
-    <p class="cta-eyebrow">Próximo Passo</p>
-    <h2 class="cta-title">
-      COMECE HOJE
-      <span class="hollow">SUA TRANSFORMAÇÃO</span>
-    </h2>
-    <p class="cta-sub">
-      Treine com quem vive as artes marciais há décadas e construiu sua trajetória dentro e fora das competições.
-    </p>
-    <div class="cta-btns">
-      <a href="https://wa.me/5535984735176?text=Ol%C3%A1%2C+vim+pelo+seu+site+e+gostaria+de+agendar+uma+aula." class="btn-gold" target="_blank">
-        <svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Agendar pelo WhatsApp
+  <header class="site-header" id="topo">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio">
+        <span class="brand-mark" aria-hidden="true">PF</span>
+        <span class="brand-name">Personal<span>Fight</span></span>
       </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#modalidades">Modalidades</a></li>
+          <li><a href="#aulas">Aulas</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+      <a class="button button-small header-cta js-whatsapp-trigger" href="https://wa.me/5535984735176?text=Ol%C3%A1%2C%20vim%20pelo%20site%20PersonalFight%20e%20gostaria%20de%20agendar%20uma%20aula." target="_blank" rel="noopener noreferrer">Agendar aula inicial</a>
+      <button class="menu-button" type="button" aria-label="Abrir menu" aria-controls="main-nav" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/images/clayton-muay-thai.jpg" alt="" width="1025" height="1280" fetchpriority="high">
+      </div>
+      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="container hero-stage">
+        <div class="hero-topline">
+          <p class="hero-proof"><span aria-hidden="true">★★★★★</span><strong>Experiência real. Treino individual.</strong></p>
+          <p class="hero-coach"><strong>Clayton Rodrigues Israel</strong><span>+15 anos ensinando artes marciais</span></p>
+        </div>
+
+        <h1 id="hero-title"><span>Personal</span><em>Fight</em></h1>
+
+        <div class="hero-bottom">
+          <div class="hero-manifesto">
+            <p class="eyebrow">Muay Thai • Jiu-Jitsu • Boxe • MMA</p>
+            <h2>Treino feito para <span>você.</span><br>Resultado construído junto.</h2>
+            <p>Aulas particulares adaptadas ao seu nível, à sua rotina e ao objetivo que você quer alcançar.</p>
+            <div class="hero-actions">
+              <a class="button button-pill button-outline js-whatsapp-trigger" href="https://wa.me/5535984735176?text=Ol%C3%A1%2C%20vim%20pelo%20site%20PersonalFight%20e%20gostaria%20de%20agendar%20uma%20aula." target="_blank" rel="noopener noreferrer">Agendar aula inicial</a>
+              <a class="button button-pill" href="#modalidades">Conhecer modalidades <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <ul class="hero-facts">
+            <li><strong>+80</strong><span>competições</span></li>
+            <li><strong>3</strong><span>anos no Corinthians MMA</span></li>
+            <li><strong>4</strong><span>modalidades</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="hero-contact-card js-whatsapp-trigger" type="button">
+        <span class="hero-contact-mark" aria-hidden="true">PF</span>
+        <span><strong>Agende sua aula inicial</strong><small>Resposta direta pelo WhatsApp</small></span>
+        <i aria-hidden="true">↗</i>
+      </button>
+      <button class="hero-round-cta js-whatsapp-trigger" type="button" aria-label="Agendar aula pelo WhatsApp"><span>Agendar</span><strong>agora</strong><i aria-hidden="true">↗</i></button>
+      <a class="scroll-cue" href="#sobre" aria-label="Continuar para a seção sobre o professor"><span aria-hidden="true"></span>Descubra o método</a>
+    </section>
+
+    <div class="marquee">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Disciplina</span><i aria-hidden="true"></i><span>Técnica</span><i aria-hidden="true"></i><span>Performance</span><i aria-hidden="true"></i><span>Confiança</span><i aria-hidden="true"></i><span>Evolução</span><i aria-hidden="true"></i>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <span>Disciplina</span><i aria-hidden="true"></i><span>Técnica</span><i aria-hidden="true"></i><span>Performance</span><i aria-hidden="true"></i><span>Confiança</span><i aria-hidden="true"></i><span>Evolução</span><i aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+
+    <section class="section about" id="sobre" aria-labelledby="sobre-title">
+      <div class="container about-grid">
+        <div class="about-visual reveal">
+          <figure class="image-frame"><img src="assets/images/clayton-cinturoes.jpg" alt="Clayton Israel usando luvas e exibindo cinturões conquistados" width="828" height="1018" loading="lazy" decoding="async"></figure>
+          <div class="experience-card"><strong>Desde os 5</strong><span>uma vida dedicada às artes marciais</span></div>
+        </div>
+        <div class="about-content reveal">
+          <p class="section-index"><span>01</span> Sobre o professor</p>
+          <h2 class="section-title" id="sobre-title">Experiência de quem viveu o <span>alto rendimento</span></h2>
+          <p><strong>Clayton Rodrigues Israel</strong> treina artes marciais desde os 5 anos de idade. Mais de três décadas de dedicação formaram um profissional com rara combinação de experiência competitiva e capacidade didática.</p>
+          <p>Ex-atleta profissional contratado por <strong>três anos pela equipe de MMA do Sport Club Corinthians Paulista</strong>, Clayton acumulou mais de <strong>80 competições</strong> na carreira e teve contato com grandes nomes do esporte, incluindo Anderson Silva.</p>
+          <p>Hoje, com mais de <strong>15 anos de experiência no ensino</strong>, transforma alunos de todos os níveis — do iniciante absoluto ao atleta competitivo — por meio de um método personalizado, intenso e progressivo.</p>
+          <ul class="credentials">
+            <li><span>01</span>Grau preto em Muay Thai</li><li><span>02</span>Faixa preta em Jiu-Jitsu</li><li><span>03</span>Professor de Boxe</li><li><span>04</span>Ex-atleta profissional de MMA</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section disciplines" id="modalidades" aria-labelledby="modalidades-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><p class="section-index"><span>02</span> Especialidades</p><h2 class="section-title" id="modalidades-title">Quatro caminhos.<br><span>Uma evolução real.</span></h2></div>
+          <p>Explore cada modalidade. O plano pode concentrar-se em uma arte ou combinar técnicas conforme seu momento e objetivo.</p>
+        </div>
+
+        <div class="modality-selector reveal">
+          <div class="modality-tabs" role="tablist" aria-label="Escolha uma modalidade" aria-orientation="vertical">
+            <button id="tab-muay-thai" class="modality-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-muay-thai" tabindex="0" data-name="Muay Thai" data-type="Striking" data-level="Iniciante ao avançado" data-focus="Técnica e condicionamento" data-guidance="Professor grau preto" data-summary="Potência, precisão e defesa em um treino completo e progressivo."><span>01</span><strong>Muay Thai</strong><small>Striking · Grau preto</small><i aria-hidden="true">→</i></button>
+            <button id="tab-jiu-jitsu" class="modality-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-jiu-jitsu" tabindex="-1" data-name="Jiu-Jitsu" data-type="Grappling" data-level="Iniciante ao avançado" data-focus="Controle e estratégia" data-guidance="Professor faixa preta" data-summary="Leitura, controle e confiança para evoluir com técnica no solo."><span>02</span><strong>Jiu-Jitsu</strong><small>Grappling · Faixa preta</small><i aria-hidden="true">→</i></button>
+            <button id="tab-boxe" class="modality-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-boxe" tabindex="-1" data-name="Boxe" data-type="Striking" data-level="Todos os níveis" data-focus="Ritmo e precisão" data-guidance="Professor de Boxe" data-summary="Movimentação, esquivas e golpes treinados com propósito e segurança."><span>03</span><strong>Boxe</strong><small>Precisão · Movimento</small><i aria-hidden="true">→</i></button>
+            <button id="tab-mma" class="modality-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-mma" tabindex="-1" data-name="MMA" data-type="Combate completo" data-level="Base ao competitivo" data-focus="Integração e performance" data-guidance="Ex-atleta profissional" data-summary="Striking e grappling integrados pela experiência de alto rendimento."><span>04</span><strong>MMA</strong><small>Combate · Performance</small><i aria-hidden="true">→</i></button>
+          </div>
+
+          <div class="modality-stage" aria-live="polite">
+            <article id="panel-muay-thai" class="modality-panel is-active" role="tabpanel" aria-labelledby="tab-muay-thai" tabindex="0">
+              <img src="assets/images/clayton-muay-thai.jpg" alt="Clayton Israel executando um chute alto no treino de Muay Thai" width="1025" height="1280" loading="lazy" decoding="async">
+              <div class="modality-shade"></div><span class="modality-watermark" aria-hidden="true">01</span>
+              <div class="modality-copy"><p>A arte dos 8 membros</p><h3>Potência com técnica.</h3><p>Velocidade, precisão e condicionamento em um treino completo de striking, conduzido por um professor grau preto.</p><ul><li>Condicionamento</li><li>Técnica</li><li>Defesa</li></ul></div>
+            </article>
+            <article id="panel-jiu-jitsu" class="modality-panel" role="tabpanel" aria-labelledby="tab-jiu-jitsu" tabindex="0">
+              <img src="assets/images/clayton-jiu-jitsu.jpg" alt="Clayton Israel de quimono e faixa preta de Jiu-Jitsu" width="853" height="1280" loading="lazy" decoding="async">
+              <div class="modality-shade"></div><span class="modality-watermark" aria-hidden="true">02</span>
+              <div class="modality-copy"><p>A arte suave</p><h3>Estratégia em movimento.</h3><p>Controle, defesa pessoal e finalizações com orientação de faixa preta e ampla experiência competitiva e didática.</p><ul><li>Controle</li><li>Estratégia</li><li>Confiança</li></ul></div>
+            </article>
+            <article id="panel-boxe" class="modality-panel" role="tabpanel" aria-labelledby="tab-boxe" tabindex="0">
+              <img src="assets/images/clayton-cinturoes.jpg" alt="Clayton Israel com luvas e cinturões de competição" width="828" height="1018" loading="lazy" decoding="async">
+              <div class="modality-shade"></div><span class="modality-watermark" aria-hidden="true">03</span>
+              <div class="modality-copy"><p>O esporte nobre</p><h3>Ritmo, leitura e precisão.</h3><p>Movimentação, golpes e esquivas para condicionamento, defesa pessoal ou competição, desde o primeiro treino.</p><ul><li>Agilidade</li><li>Precisão</li><li>Resistência</li></ul></div>
+            </article>
+            <article id="panel-mma" class="modality-panel" role="tabpanel" aria-labelledby="tab-mma" tabindex="0">
+              <img src="assets/images/equipe-corinthians-mma.jpg" alt="Clayton com a equipe profissional de MMA do Corinthians" width="1206" height="882" loading="lazy" decoding="async">
+              <div class="modality-shade"></div><span class="modality-watermark" aria-hidden="true">04</span>
+              <div class="modality-copy"><p>Combate total</p><h3>Experiência de alto nível.</h3><p>A integração das artes marciais com a metodologia de um ex-atleta profissional e foco em evolução completa.</p><ul><li>Striking</li><li>Grappling</li><li>Performance</li></ul></div>
+            </article>
+          </div>
+
+          <aside class="modality-facts" aria-live="polite">
+            <div>
+              <p class="eyebrow">Ficha rápida</p>
+              <h3 id="modality-fact-title">Muay Thai</h3>
+              <dl>
+                <div><dt>Tipo</dt><dd id="modality-fact-type">Striking</dd></div>
+                <div><dt>Nível</dt><dd id="modality-fact-level">Iniciante ao avançado</dd></div>
+                <div><dt>Foco</dt><dd id="modality-fact-focus">Técnica e condicionamento</dd></div>
+                <div><dt>Orientação</dt><dd id="modality-fact-guidance">Professor grau preto</dd></div>
+              </dl>
+            </div>
+            <div class="modality-fact-note">
+              <p id="modality-fact-summary">Potência, precisão e defesa em um treino completo e progressivo.</p>
+              <button class="button button-pill js-whatsapp-trigger" type="button">Quero treinar <span aria-hidden="true">↗</span></button>
+            </div>
+          </aside>
+        </div>
+        <noscript><p class="noscript-note">Ative o JavaScript para alternar a apresentação visual das modalidades.</p></noscript>
+      </div>
+    </section>
+
+    <section class="section training" id="aulas" aria-labelledby="aulas-title">
+      <div class="container">
+        <div class="manifesto reveal">
+          <div class="manifesto-copy">
+            <p class="section-index"><span>03</span> Manifesto PersonalFight</p>
+            <p class="manifesto-statement">O treino não precisa ser genérico. Ele precisa <em>fazer sentido para você.</em></p>
+            <p>Experiência de alto rendimento aplicada com atenção individual, progressão segura e um propósito claro em cada sessão.</p>
+          </div>
+          <figure class="manifesto-visual">
+            <img src="assets/images/clayton-jiu-jitsu.jpg" alt="Clayton Israel preparado para um treino individual de Jiu-Jitsu" width="853" height="1280" loading="lazy" decoding="async">
+            <figcaption><span>Personal fighter</span> Técnica. Presença. Evolução.</figcaption>
+          </figure>
+        </div>
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">Treinamento personalizado</p><h2 class="section-title" id="aulas-title">O treino se adapta <span>a você</span></h2></div>
+          <p>Atendimento individual para acelerar o aprendizado com segurança e atenção total.</p>
+        </div>
+        <div class="program-grid">
+          <article class="program-card program-intro reveal">
+            <p class="program-kicker">Programa PersonalFight</p>
+            <h3>Treine como você <span>precisa.</span></h3>
+            <p>Um programa individual para começar, evoluir tecnicamente e ganhar confiança com acompanhamento próximo.</p>
+            <ul><li>Coach 1:1</li><li>Progressão</li><li>Propósito</li></ul>
+          </article>
+
+          <article class="program-card program-feature reveal">
+            <img src="assets/images/clayton-cinturoes.jpg" alt="Clayton Israel preparado para o treino com luvas e cinturões" width="828" height="1018" loading="lazy" decoding="async">
+            <div class="program-feature-shade"></div>
+            <div class="program-proof"><span>Experiência real • método individual</span><ul><li><strong>+15</strong> anos ensinando</li><li><strong>+80</strong> competições</li><li><strong>4</strong> modalidades</li></ul></div>
+            <div class="program-feature-copy"><p>PersonalFight • Clayton Israel</p><h3>Treino sério.<br>Feito para você.</h3><p>Técnica, condicionamento e estratégia com atenção exclusiva em cada detalhe.</p><button class="button button-pill button-outline js-whatsapp-trigger" type="button">Agendar aula inicial</button></div>
+          </article>
+
+          <article class="program-card program-profile reveal">
+            <span class="program-seal" aria-hidden="true">PF</span>
+            <div><p class="program-kicker">Atendimento individual</p><h3>Academia ou domicílio.</h3><p>Flexibilidade de local e horário para encaixar a prática na sua rotina com consistência.</p></div>
+          </article>
+
+          <article class="program-card program-process reveal">
+            <p class="program-kicker">Como funciona</p>
+            <ol>
+              <li><span>01</span><strong>Avaliação do objetivo</strong></li>
+              <li><span>02</span><strong>Plano personalizado</strong></li>
+              <li><span>03</span><strong>Treino técnico e físico</strong></li>
+              <li><span>04</span><strong>Ajustes constantes</strong></li>
+              <li><span>05</span><strong>Evolução mensurável</strong></li>
+            </ol>
+          </article>
+
+          <article class="program-card program-cta reveal">
+            <p class="program-kicker">Seu primeiro round</p>
+            <h3>Pronto para começar?</h3>
+            <p>Conte seu objetivo e receba uma orientação inicial diretamente pelo WhatsApp.</p>
+            <button class="button button-pill button-dark js-whatsapp-trigger" type="button">Quero minha aula <span aria-hidden="true">↗</span></button>
+          </article>
+
+          <article class="program-card program-modalities reveal">
+            <p class="program-kicker">04 modalidades</p>
+            <ul><li>Muay Thai</li><li>Boxe</li><li>Jiu-Jitsu</li><li>MMA</li></ul>
+            <a class="text-link" href="#modalidades">Explorar modalidades <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="legacy" id="trajetoria" aria-labelledby="legado-title">
+      <img class="legacy-background" src="assets/images/equipe-corinthians-mma.jpg" alt="Equipe profissional de MMA do Corinthians reunida durante os treinos" width="1206" height="882" loading="lazy" decoding="async">
+      <div class="legacy-overlay"></div>
+      <div class="container legacy-content reveal">
+        <p class="eyebrow">Carreira profissional</p><h2 id="legado-title">Três anos como atleta do <span>Corinthians MMA</span></h2>
+        <p>Uma passagem que consolidou a visão de alto rendimento aplicada hoje a cada aluno — independentemente do nível, objetivo ou idade.</p>
+        <div class="legacy-numbers"><div><strong>+80</strong><span>competições na carreira</span></div><div><strong>+30</strong><span>anos nas artes marciais</span></div><div><strong>+15</strong><span>anos como professor</span></div></div>
+      </div>
+    </section>
+
+    <section class="arena-banner" aria-labelledby="arena-title">
+      <div class="arena-banner-overlay" aria-hidden="true"></div>
+      <div class="container arena-banner-content reveal">
+        <p class="eyebrow">Atmosfera de competição • atenção individual</p>
+        <h2 id="arena-title">Mentalidade de atleta.<br><span>Treino para a vida real.</span></h2>
+        <p>A experiência do alto rendimento aplicada ao seu objetivo, respeitando seu nível e construindo evolução consistente.</p>
+        <button class="button button-pill js-whatsapp-trigger" type="button">Preparar meu primeiro treino <span aria-hidden="true">↗</span></button>
+      </div>
+    </section>
+
+    <section class="section benefits" id="beneficios" aria-labelledby="beneficios-title">
+      <div class="container">
+        <div class="section-heading reveal"><div><p class="section-index"><span>04</span> Transformação completa</p><h2 class="section-title" id="beneficios-title">Muito além <span>da luta</span></h2></div><p>Benefícios que acompanham você no treino e em todos os outros desafios do dia.</p></div>
+        <div class="benefit-grid">
+          <article><span>01</span><h3>Condicionamento físico</h3><p>Força, resistência, coordenação e agilidade.</p></article><article><span>02</span><h3>Emagrecimento</h3><p>Treinos intensos e dinâmicos que mantêm o corpo ativo.</p></article><article><span>03</span><h3>Disciplina mental</h3><p>Foco e resiliência que transcendem o tatame.</p></article><article><span>04</span><h3>Defesa pessoal</h3><p>Técnicas eficazes treinadas com responsabilidade.</p></article><article><span>05</span><h3>Autoconfiança</h3><p>Segurança construída por meio de evolução constante.</p></article><article><span>06</span><h3>Foco total</h3><p>Atenção e precisão desenvolvidas a cada movimento.</p></article><article><span>07</span><h3>Redução do estresse</h3><p>Movimento e concentração para aliviar a tensão.</p></article><article><span>08</span><h3>Saúde mental</h3><p>Rotina, propósito e bem-estar dentro e fora do treino.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery" id="galeria" aria-labelledby="galeria-title">
+      <div class="container">
+        <div class="section-heading reveal"><div><p class="section-index"><span>05</span> Trajetória em imagens</p><h2 class="section-title" id="galeria-title">Vivência dentro <span>e fora do tatame</span></h2></div><p>Da formação técnica à carreira competitiva: uma história construída com disciplina, grandes encontros e evolução coletiva.</p></div>
+        <div class="gallery-grid">
+          <figure class="gallery-tall reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: Clayton Israel treinando Muay Thai">
+              <img src="assets/images/clayton-muay-thai.jpg" alt="Clayton Israel executando um chute alto durante treino de Muay Thai" width="1025" height="1280" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>01</span> Muay Thai • Técnica e potência</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: Clayton Israel no Jiu-Jitsu">
+              <img src="assets/images/clayton-jiu-jitsu.jpg" alt="Clayton Israel de quimono e faixa preta de Jiu-Jitsu" width="853" height="1280" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>02</span> Jiu-Jitsu • Arte suave</figcaption>
+          </figure>
+          <figure class="gallery-wide reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: equipe de MMA do Corinthians">
+              <img src="assets/images/equipe-corinthians-mma.jpg" alt="Clayton com a equipe profissional de MMA do Corinthians" width="1206" height="882" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>03</span> Corinthians MMA • Alto rendimento</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: Clayton Israel com cinturões">
+              <img src="assets/images/clayton-cinturoes.jpg" alt="Clayton Israel com luvas e cinturões conquistados" width="828" height="1018" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>04</span> Competição • Experiência real</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: Clayton em encontro com referência do MMA">
+              <img src="assets/images/clayton-team-nogueira.jpg" alt="Clayton em uma academia ao lado de uma referência do MMA, ambos com uniforme Team Nogueira" width="1136" height="1384" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>05</span> Grandes referências • Troca de experiência</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: encontro de faixas-pretas de Jiu-Jitsu">
+              <img src="assets/images/clayton-encontro-jiu-jitsu.jpg" alt="Clayton de quimono preto ao lado de outro faixa-preta de Jiu-Jitsu" width="1254" height="1254" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>06</span> Jiu-Jitsu • Encontro de faixas-pretas</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: turma PersonalFight após o treino">
+              <img src="assets/images/turma-personalfight-01.jpg" alt="Turma PersonalFight reunida em duas fileiras após o treino de artes marciais" width="1621" height="970" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>07</span> Turma de striking • Evolução coletiva</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: equipe de Jiu-Jitsu no tatame">
+              <img src="assets/images/equipe-jiu-jitsu.jpg" alt="Equipe de Jiu-Jitsu reunida no tatame com quimonos de diferentes cores" width="1652" height="952" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>08</span> Jiu-Jitsu • Formação e equipe</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button class="gallery-item" type="button" aria-label="Ampliar foto: comunidade PersonalFight reunida">
+              <img src="assets/images/turma-personalfight-02.jpg" alt="Grupo diverso de alunos PersonalFight reunido sobre o tatame azul" width="1461" height="1076" loading="lazy" decoding="async">
+              <span class="gallery-zoom" aria-hidden="true">＋</span>
+            </button>
+            <figcaption><span>09</span> Comunidade PersonalFight • Todos os níveis</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote" aria-label="Mensagem do professor"><div class="container reveal"><span class="quote-mark" aria-hidden="true">“</span><blockquote>As artes marciais vão muito além da luta. Elas constroem quem você é <em>fora do tatame.</em></blockquote><p>Seu resultado começa com a decisão de começar.</p></div></section>
+
+    <section class="contact" id="contato" aria-labelledby="contato-title">
+      <div class="container contact-inner reveal">
+        <div><p class="section-index section-index-light"><span>06</span> Seu próximo passo</p><h2 id="contato-title">Comece hoje sua <span>transformação.</span></h2></div>
+        <div class="contact-action"><p>Conte seu objetivo e encontre o melhor formato de treino para você.</p><a class="button button-light js-whatsapp-trigger" href="https://wa.me/5535984735176?text=Ol%C3%A1%2C%20vim%20pelo%20site%20PersonalFight%20e%20gostaria%20de%20agendar%20uma%20aula." target="_blank" rel="noopener noreferrer">Conversar no WhatsApp <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><a class="brand footer-brand" href="#inicio"><span class="brand-mark" aria-hidden="true">PF</span><span class="brand-name">Personal<span>Fight</span></span></a><p>Aulas particulares de Muay Thai, Jiu-Jitsu, Boxe e MMA.</p></div>
+      <nav aria-label="Navegação do rodapé"><a href="#sobre">Sobre</a><a href="#modalidades">Modalidades</a><a href="#aulas">Aulas</a><a href="#galeria">Galeria</a></nav>
+      <div class="footer-contact"><p>Pronto para começar?</p><a class="js-whatsapp-trigger" href="https://wa.me/5535984735176?text=Ol%C3%A1%2C%20vim%20pelo%20site%20PersonalFight%20e%20gostaria%20de%20agendar%20uma%20aula." target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp ↗</a></div>
+    </div>
+    <div class="container footer-bottom"><p>© <span id="current-year">2026</span> PersonalFight. Todos os direitos reservados.</p><a href="#topo">Voltar ao topo ↑</a></div>
+  </footer>
+
+  <button class="whatsapp-float js-whatsapp-trigger" type="button" aria-label="Abrir atendimento pelo WhatsApp"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12.04 2a9.84 9.84 0 0 0-8.4 14.98L2 22l5.17-1.61A9.92 9.92 0 1 0 12.04 2Zm5.78 13.98c-.25.7-1.47 1.34-2.04 1.42-.53.08-1.2.11-1.94-.12-.45-.14-1.03-.34-1.77-.66-3.12-1.35-5.16-4.5-5.32-4.71-.15-.21-1.27-1.69-1.27-3.22s.8-2.29 1.09-2.6c.28-.31.62-.39.83-.39h.6c.19 0 .45-.07.7.53.26.62.88 2.15.96 2.31.08.16.13.34.03.55-.1.2-.15.33-.31.51-.16.18-.33.4-.47.53-.16.16-.32.33-.14.64.18.31.79 1.3 1.7 2.1 1.17 1.04 2.15 1.36 2.46 1.51.31.16.49.13.67-.08.18-.2.78-.91.98-1.22.21-.31.42-.26.7-.16.3.11 1.85.88 2.17 1.04.31.16.52.23.6.36.08.13.08.75-.17 1.45Z"/></svg><span>WhatsApp</span></button>
+
+  <div class="whatsapp-dialog" id="whatsapp-dialog" role="dialog" aria-modal="true" aria-labelledby="whatsapp-title" hidden>
+    <div class="whatsapp-backdrop">
+      <section class="whatsapp-panel" role="document">
+        <div class="whatsapp-panel-head">
+          <span class="brand-mark" aria-hidden="true">PF</span>
+          <div><p>Atendimento PersonalFight</p><h2 id="whatsapp-title">Vamos preparar seu primeiro treino.</h2></div>
+          <button class="whatsapp-close" type="button" aria-label="Fechar atendimento" data-whatsapp-close>×</button>
+        </div>
+        <p class="whatsapp-intro">Responda três itens rápidos. O site monta sua mensagem e abre o WhatsApp para você enviar.</p>
+        <form id="whatsapp-form" novalidate>
+          <label for="whatsapp-name">Seu nome</label>
+          <input id="whatsapp-name" name="name" type="text" autocomplete="name" placeholder="Como podemos chamar você?" required>
+
+          <label for="whatsapp-modality">Modalidade de interesse</label>
+          <select id="whatsapp-modality" name="modality" required>
+            <option value="">Selecione uma modalidade</option>
+            <option>Muay Thai</option><option>Jiu-Jitsu</option><option>Boxe</option><option>MMA</option><option>Ainda não sei</option>
+          </select>
+
+          <fieldset>
+            <legend>Principal objetivo</legend>
+            <div class="whatsapp-options">
+              <label><input type="radio" name="goal" value="Condicionamento físico" required><span>Condicionamento</span></label>
+              <label><input type="radio" name="goal" value="Defesa pessoal"><span>Defesa pessoal</span></label>
+              <label><input type="radio" name="goal" value="Emagrecimento"><span>Emagrecimento</span></label>
+              <label><input type="radio" name="goal" value="Técnica ou competição"><span>Técnica / competição</span></label>
+            </div>
+          </fieldset>
+
+          <label for="whatsapp-message">Algo que Clayton precisa saber? <span>Opcional</span></label>
+          <textarea id="whatsapp-message" name="message" rows="3" placeholder="Conte um pouco sobre sua experiência ou disponibilidade."></textarea>
+          <button class="button whatsapp-submit" type="submit"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12.04 2a9.84 9.84 0 0 0-8.4 14.98L2 22l5.17-1.61A9.92 9.92 0 1 0 12.04 2Zm5.78 13.98c-.25.7-1.47 1.34-2.04 1.42-.53.08-1.2.11-1.94-.12-.45-.14-1.03-.34-1.77-.66-3.12-1.35-5.16-4.5-5.32-4.71-.15-.21-1.27-1.69-1.27-3.22s.8-2.29 1.09-2.6c.28-.31.62-.39.83-.39h.6c.19 0 .45-.07.7.53.26.62.88 2.15.96 2.31.08.16.13.34.03.55-.1.2-.15.33-.31.51-.16.18-.33.4-.47.53-.16.16-.32.33-.14.64.18.31.79 1.3 1.7 2.1 1.17 1.04 2.15 1.36 2.46 1.51.31.16.49.13.67-.08.18-.2.78-.91.98-1.22.21-.31.42-.26.7-.16.3.11 1.85.88 2.17 1.04.31.16.52.23.6.36.08.13.08.75-.17 1.45Z"/></svg>Abrir conversa no WhatsApp <span aria-hidden="true">↗</span></button>
+          <p class="whatsapp-status" role="status" aria-live="polite"></p>
+          <a class="whatsapp-direct-link" href="https://wa.me/5535984735176" target="_blank" rel="noopener noreferrer" hidden>Se o WhatsApp não abriu, clique aqui <span aria-hidden="true">↗</span></a>
+        </form>
+      </section>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-
-<footer>
-  <div class="footer-logo">CLAYTON<span>.</span>ISRAEL</div>
-  <p class="footer-text">Muay Thai · Jiu-Jitsu · Boxe · MMA</p>
-  <p class="footer-text">© 2025 — Aulas Particulares de Artes Marciais</p>
-</footer>
-
-<!-- WHATSAPP FLOAT -->
-
-<a class="wa-float" href="https://wa.me/5535984735176?text=Ol%C3%A1%2C+vim+pelo+seu+site+e+gostaria+de+agendar+uma+aula." target="_blank" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
-<script>
-  // Navbar scroll
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Generate particles
-  const particlesEl = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.setProperty('--dur', (6 + Math.random() * 10) + 's');
-    p.style.setProperty('--delay', (Math.random() * 8) + 's');
-    p.style.setProperty('--drift', (Math.random() * 100 - 50) + 'px');
-    p.style.left = (Math.random() * 100) + '%';
-    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-    // alternate gold and red
-    p.style.background = Math.random() > 0.5 ? '#c8972a' : '#c0000a';
-    particlesEl.appendChild(p);
-  }
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => observer.observe(r));
-
-  // Mobile menu
-  function toggleMenu() {
-    const links = document.querySelector('.nav-links');
-    if (!links) return;
-    if (links.style.display === 'flex') {
-      links.style.display = 'none';
-    } else {
-      links.style.cssText = `
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(5,5,5,0.98);
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-        z-index: 999;
-      `;
-      links.querySelectorAll('a').forEach(a => {
-        a.style.fontSize = '1.5rem';
-        a.addEventListener('click', () => { links.style.display = 'none'; });
-      });
-    }
-  }
-</script>
-
+  <div class="lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption" hidden>
+    <div class="lightbox-backdrop">
+      <div class="lightbox-dialog" role="document">
+        <button class="lightbox-close" type="button" aria-label="Fechar imagem ampliada" data-lightbox-close>×</button>
+        <button class="lightbox-nav lightbox-prev" type="button" aria-label="Imagem anterior">←</button>
+        <figure>
+          <img class="lightbox-image" src="assets/images/clayton-muay-thai.jpg" alt="">
+          <figcaption id="lightbox-caption"></figcaption>
+        </figure>
+        <button class="lightbox-nav lightbox-next" type="button" aria-label="Próxima imagem">→</button>
+        <p class="lightbox-counter" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
